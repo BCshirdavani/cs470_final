@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.shymacbook.foodtracker.Meals">
+    tools:context="com.example.shymacbook.foodtracker.CreateMeal">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,28 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_meals" />
-
-    <Button
-        android:id="@+id/createMeal_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="60dp"
-        android:text="Create New Meal"
-        android:onClick="showCreateMeals"
-        />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/meal_recyclerView"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/createMeal_button"
-        android:layout_marginTop="120dp"
-        />
+    <include layout="@layout/content_create_meal" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

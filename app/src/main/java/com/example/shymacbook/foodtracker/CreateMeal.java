@@ -1,24 +1,18 @@
 package com.example.shymacbook.foodtracker;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-public class Meals extends AppCompatActivity {
-
-    private Button mCreateMealButton;
+public class CreateMeal extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meals);
+        setContentView(R.layout.activity_create_meal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -32,15 +26,4 @@ public class Meals extends AppCompatActivity {
         });
     }
 
-    public void showCreateMeals(View view) {
-        Log.d("button click", "showCreateMeals: Create Meals button clicked from main.");
-        goToCreateMeal();
-    }
-
-    private void goToCreateMeal() {
-        Log.d("function", "launching goToCreateMeal()");
-        Toast.makeText(getApplicationContext(), "going to create meals", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, CreateMeal.class);
-        startActivity(intent);
-    }
 }

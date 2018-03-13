@@ -23,7 +23,13 @@
             android:name=".Meals"
             android:label="@string/title_activity_meals"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateMeal"
+            android:label="@string/title_activity_create_meal"
+            android:parentActivityName=".Meals"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
