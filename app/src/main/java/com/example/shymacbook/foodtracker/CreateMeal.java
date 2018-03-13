@@ -26,4 +26,7 @@ public class CreateMeal extends AppCompatActivity {
         });
     }
 
+    public void createThisMeal(View view) {
+        // TODO: add new meal to database, and recycleView
+    }
 }

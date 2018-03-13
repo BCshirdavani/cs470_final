@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class Meals extends AppCompatActivity {
+    private MealListAdapter mAdapter;
 
     private Button mCreateMealButton;
 
