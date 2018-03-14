@@ -34,6 +34,41 @@ public class TestUtil {
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "orange, water");
         list.add(cv);
 
+        cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Lemonade");
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "lemon, water, sugar");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Spaghetti");
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "tomato, pasta noodles");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Top Ramen");
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "dry noodles, flavor powder, water");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Hot Pocket");
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "Garbage, hot lava");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Ice Cream");
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "milk, fat, eggs, sugar");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Jello");
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "sugar, water");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Croissant");
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "Bread, butter");
+        list.add(cv);
+
         //insert all guests in one transaction
         try
         {
