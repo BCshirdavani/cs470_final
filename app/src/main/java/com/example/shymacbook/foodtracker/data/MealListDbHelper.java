@@ -29,7 +29,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // COMPLETED (6) Inside, create an String query called SQL_CREATE_WAITLIST_TABLE that will create the table
         // Create a table to hold waitlist data
-        final String SQL_CREATE_WAITLIST_TABLE = "CREATE TABLE " + MealListEntry.TABLE_NAME + " (" +
+        final String SQL_CREATE_MEALLIST_TABLE = "CREATE TABLE " + MealListEntry.TABLE_NAME + " (" +
                 MealListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 MealListEntry.COLUMN_MEAL_TITLE + " TEXT NOT NULL, " +
                 MealListEntry.COLUMN_MEAL_NOTES + " TEXT NOT NULL, " +
@@ -37,7 +37,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
                 "); ";
 
         // COMPLETED (7) Execute the query by calling execSQL on sqLiteDatabase and pass the string query SQL_CREATE_WAITLIST_TABLE
-        db.execSQL(SQL_CREATE_WAITLIST_TABLE);
+        db.execSQL(SQL_CREATE_MEALLIST_TABLE);
     }
 
     @Override
