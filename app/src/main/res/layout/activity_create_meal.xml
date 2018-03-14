@@ -44,7 +44,7 @@
             android:layout_gravity="bottom|center"
             android:layout_marginTop="100dp"
             android:text="Create This Meal"
-            android:onClick="createThisMeal"/>
+            android:onClick="createThisMeal_buttonClick"/>
 
 
     </LinearLayout>

@@ -45,11 +45,9 @@ public class Meals extends AppCompatActivity {
         MealListDbHelper dbHelper = new MealListDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
         TestUtil.insertFakeData(mDb);
-        Cursor cursor = getAllGuests(); // TODO: setup getAllGuests() at end of this file
+        Cursor cursor = getAllGuests();
         mAdapter = new MealListAdapter(this, cursor);
         MealListRecyclerView.setAdapter(mAdapter);
-
-
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -62,7 +60,20 @@ public class Meals extends AppCompatActivity {
         });
     }
 
-
+    // TODO: attempting to refresh data and show new stuff in list here...
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RecyclerView MealListRecyclerView;
+        MealListRecyclerView = (RecyclerView) this.findViewById(R.id.meal_recyclerView);
+        MealListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        MealListDbHelper dbHelper = new MealListDbHelper(this);
+        mDb = dbHelper.getWritableDatabase();
+        
+        Cursor cursor = getAllGuests();
+        mAdapter = new MealListAdapter(this, cursor);
+        MealListRecyclerView.setAdapter(mAdapter);
+    }
 
     public void showCreateMeals(View view) {
         Log.d("button click", "showCreateMeals: Create Meals button clicked from main.");
