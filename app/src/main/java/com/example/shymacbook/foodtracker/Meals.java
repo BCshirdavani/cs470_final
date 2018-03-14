@@ -49,6 +49,10 @@ public class Meals extends AppCompatActivity {
         mAdapter = new MealListAdapter(this, cursor);
         MealListRecyclerView.setAdapter(mAdapter);
 
+        // COMPLETED (15)
+        // TODO: do I need this here? there is no recycleView on this screen, so do I need an adapter here?
+//        mAdapter.swapCursor(getAllGuests());
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,15 +68,11 @@ public class Meals extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        RecyclerView MealListRecyclerView;
-        MealListRecyclerView = (RecyclerView) this.findViewById(R.id.meal_recyclerView);
-        MealListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        MealListDbHelper dbHelper = new MealListDbHelper(this);
-        mDb = dbHelper.getWritableDatabase();
-        
-        Cursor cursor = getAllGuests();
-        mAdapter = new MealListAdapter(this, cursor);
-        MealListRecyclerView.setAdapter(mAdapter);
+        Log.d("lifecycle", "onResume: at Meals called");
+        // COMPLETED (15)
+        // TODO: do I need this here? there is no recycleView on this screen, so do I need an adapter here?
+        mAdapter.swapCursor(getAllGuests());
+        Log.d("function call", "swapCursor called at onResume Meals act");
     }
 
     public void showCreateMeals(View view) {

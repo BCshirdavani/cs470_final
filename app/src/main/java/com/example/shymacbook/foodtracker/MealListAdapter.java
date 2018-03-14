@@ -3,6 +3,7 @@ package com.example.shymacbook.foodtracker;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
 
     @Override
     public void onBindViewHolder(MealViewHolder holder, int position) {
+        Log.d("function ex", "onBindViewHolder: executing from MealListAdapter");
         // Move the mCursor to the position of the item to be displayed
         if (!mCursor.moveToPosition(position))
             return; // bail if returned null
@@ -53,15 +55,19 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
 
     @Override
     public int getItemCount() {
+        Log.d("function ex", "getItemCount = " + mCursor.getCount());
         return mCursor.getCount();
+
     }
 
     public void swapCursor(Cursor newCursor) {
+        Log.d("function ex", "swapCursor: executing from MealListAdapter");
         // COMPLETED (16) Inside, check if the current cursor is not null, and close it if so
         // Always close the previous mCursor first
         if (mCursor != null) mCursor.close();
         // COMPLETED (17) Update the local mCursor to be equal to  newCursor
         mCursor = newCursor;
+        Log.d("function ex", "swapCursor: mCursor = newCursor");
         // COMPLETED (18) Check if the newCursor is not null, and call this.notifyDataSetChanged() if so
         if (newCursor != null) {
             // Force the RecyclerView to refresh

@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class CreateMeal extends AppCompatActivity {
-    private MealListAdapter mAdapter;
+//    private MealListAdapter mAdapter;
     // Create a local field SQLiteDatabase called mDb
     private SQLiteDatabase mDb;
     // COMPLETED (1) Create local EditText fields for mNewGuestNameEditText and mNewPartySizeEditText
@@ -50,13 +50,13 @@ public class CreateMeal extends AppCompatActivity {
 
         // COMPLETED (4) call insertFakeData in TestUtil and pass the database reference mDb
         //Fill the database with fake data
-        TestUtil.insertFakeData(mDb);
+//        TestUtil.insertFakeData(mDb);
 
         // COMPLETED (7)
-        Cursor cursor = getAllGuests();
+//        Cursor cursor = getAllGuests();
 
         // COMPLETED (12)
-        mAdapter = new MealListAdapter(this, cursor);
+//        mAdapter = new MealListAdapter(this, cursor);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +68,11 @@ public class CreateMeal extends AppCompatActivity {
         });
     }
 
+
+
     // TODO: figure out why new meals in db do not refresh in the recycleView screen
     public void createThisMeal(View view) {
+        Log.d("function execution", "createThisMeal(view) executing");
         //First thing, check if any of the EditTexts are empty, return if so
         if (mMealName_eText.getText().length() == 0 || mMealNotes_eText.getText().length() == 0) {
             return;
@@ -79,7 +82,7 @@ public class CreateMeal extends AppCompatActivity {
 
         // COMPLETED (15)
         // TODO: do I need this here? there is no recycleView on this screen, so do I need an adapter here?
-        mAdapter.swapCursor(getAllGuests());
+//        mAdapter.swapCursor(getAllGuests());
 
         // COMPLETED (16)
         //clear UI text fields
@@ -90,6 +93,7 @@ public class CreateMeal extends AppCompatActivity {
 
     // TODO: figure out why new meals in db do not refresh in the recycleView screen
     private Long addNewMeal(String name, String notes) {
+        Log.d("function execution", "addNewMeal(name, notes) executing");
         // COMPLETED (5) Inside, create a ContentValues instance to pass the values onto the insert query
         ContentValues cv = new ContentValues();
         // COMPLETED (6) call put to insert the name value with the key COLUMN_GUEST_NAME
@@ -97,26 +101,29 @@ public class CreateMeal extends AppCompatActivity {
         // COMPLETED (7) call put to insert the party size value with the key COLUMN_PARTY_SIZE
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, notes);
         // COMPLETED (8) call insert to run an insert query on TABLE_NAME with the ContentValues created
+        Log.d("to db preview", "title: " + name);
+        Log.d("to db preview", "note: " + notes);
         return mDb.insert(MealListContract.MealListEntry.TABLE_NAME, null, cv);
     }
 
-    private Cursor getAllGuests() {
-        // COMPLETED (6) Inside, call query on mDb passing in the table name and projection String [] order by COLUMN_TIMESTAMP
-        return mDb.query(
-                MealListContract.MealListEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                MealListContract.MealListEntry.COLUMN_TIMESTAMP
-        );
-    }
+//    private Cursor getAllGuests() {
+//        // COMPLETED (6) Inside, call query on mDb passing in the table name and projection String [] order by COLUMN_TIMESTAMP
+//        return mDb.query(
+//                MealListContract.MealListEntry.TABLE_NAME,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                MealListContract.MealListEntry.COLUMN_TIMESTAMP
+//        );
+//    }
 
     // TODO: figure out why new meals in db do not refresh in the recycleView screen
     public void createThisMeal_buttonClick(View view) {
+        Toast.makeText(getApplicationContext(), "calling createThisMeal(view)", Toast.LENGTH_SHORT).show();
+        Log.d("button click", "createThisMeal_buttonClick function called");
         createThisMeal(view);
-        Toast.makeText(getApplicationContext(), "meal created!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Meals.class);
         startActivity(intent);
     }
