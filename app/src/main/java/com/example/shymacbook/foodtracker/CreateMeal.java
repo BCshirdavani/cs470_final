@@ -103,6 +103,9 @@ public class CreateMeal extends AppCompatActivity {
         // COMPLETED (8) call insert to run an insert query on TABLE_NAME with the ContentValues created
         Log.d("to db preview", "title: " + name);
         Log.d("to db preview", "note: " + notes);
+        // TODO: this manual insert statement should actually insert a row into the db...
+        String sqlStatement = "INSERT INTO " + MealListContract.MealListEntry.TABLE_NAME + " (" + MealListContract.MealListEntry.COLUMN_MEAL_TITLE + ", " + MealListContract.MealListEntry.COLUMN_MEAL_NOTES + ") Values (" + name + ", " + notes + ", '')";
+        mDb.execSQL(sqlStatement);
         return mDb.insert(MealListContract.MealListEntry.TABLE_NAME, null, cv);
     }
 

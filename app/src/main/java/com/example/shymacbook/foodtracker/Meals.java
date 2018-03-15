@@ -89,7 +89,11 @@ public class Meals extends AppCompatActivity {
 
     private Cursor getAllGuests() {
         // COMPLETED (6) Inside, call query on mDb passing in the table name and projection String [] order by COLUMN_TIMESTAMP
-        return mDb.query(
+
+        return mDb.rawQuery("SELECT * FROM " + MealListContract.MealListEntry.TABLE_NAME, null);
+
+
+        /*return mDb.query(
                  MealListContract.MealListEntry.TABLE_NAME,
                 null,
                 null,
@@ -97,6 +101,6 @@ public class Meals extends AppCompatActivity {
                 null,
                 null,
                 MealListContract.MealListEntry.COLUMN_TIMESTAMP
-        );
+        );*/
     }
 }
