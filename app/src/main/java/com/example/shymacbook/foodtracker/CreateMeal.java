@@ -1,13 +1,7 @@
 package com.example.shymacbook.foodtracker;
 
-import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.example.shymacbook.foodtracker.data.MealListContract;
-import com.example.shymacbook.foodtracker.data.MealListDbHelper;
-import com.example.shymacbook.foodtracker.data.TestUtil;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,19 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class CreateMeal extends AppCompatActivity {
-//    private MealListAdapter mAdapter;
-    // Create a local field SQLiteDatabase called mDb
-    private SQLiteDatabase mDb;
-    // COMPLETED (1) Create local EditText fields for mNewGuestNameEditText and mNewPartySizeEditText
+    private String arrayExtra[];
     private EditText mMealName_eText;
     private EditText mMealNotes_eText;
-    // COMPLETED (13) Create a constant string LOG_TAG that is equal to the class.getSimpleName()
-    // ?: I don't know what this is for...
-    private final static String LOG_TAG = CreateMeal.class.getSimpleName();
+    private Button mAddMeal_Button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,26 +27,11 @@ public class CreateMeal extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // COMPLETED (2)
         mMealName_eText = (EditText) this.findViewById(R.id.meal_name_editText);
         mMealNotes_eText = (EditText) this.findViewById(R.id.meal_notes_editText);
+        mAddMeal_Button = (Button) this.findViewById(R.id.createThisMeal_button);
+        arrayExtra = new String[3];
 
-        // Create a WaitlistDbHelper instance
-        // Create a DB helper
-        MealListDbHelper dbHelper = new MealListDbHelper(this);
-
-        // COMPLETED (3)
-        mDb = dbHelper.getWritableDatabase();
-
-        // COMPLETED (4) call insertFakeData in TestUtil and pass the database reference mDb
-        //Fill the database with fake data
-//        TestUtil.insertFakeData(mDb);
-
-        // COMPLETED (7)
-//        Cursor cursor = getAllGuests();
-
-        // COMPLETED (12)
-//        mAdapter = new MealListAdapter(this, cursor);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,65 +41,25 @@ public class CreateMeal extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        mAddMeal_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("function execution: ", "about to make arrayExtra");
+                arrayExtra[0] = (String) mMealName_eText.getText().toString();
+                arrayExtra[1] = (String) mMealNotes_eText.getText().toString();
+                arrayExtra[2] = "fromCreateMeal";
+                Log.d("function execution: ", "arrayExtra was made...");
+                Context context = CreateMeal.this;
+                Class destinationAct = Meals.class;
+                Intent intent = new Intent(context, destinationAct);
+                Log.d("function execution: ", "about to putExtra");
+                intent.putExtra(Intent.EXTRA_TEXT, arrayExtra);
+                Log.d("intent.EXTRA", "createThisMeal_buttonClick: " + arrayExtra[0] + ", " + arrayExtra[1] + ", " + arrayExtra[2]);
+                startActivity(intent);
+            }
+        });
     }
 
-
-
-    // TODO: figure out why new meals in db do not refresh in the recycleView screen
-    public void createThisMeal(View view) {
-        Log.d("function execution", "createThisMeal(view) executing");
-        //First thing, check if any of the EditTexts are empty, return if so
-        if (mMealName_eText.getText().length() == 0 || mMealNotes_eText.getText().length() == 0) {
-            return;
-        }
-        // COMPLETED (14)
-        addNewMeal(mMealName_eText.getText().toString(), mMealNotes_eText.getText().toString());
-
-        // COMPLETED (15)
-        // TODO: do I need this here? there is no recycleView on this screen, so do I need an adapter here?
-//        mAdapter.swapCursor(getAllGuests());
-
-        // COMPLETED (16)
-        //clear UI text fields
-        mMealNotes_eText.clearFocus();
-        mMealNotes_eText.getText().clear();
-        mMealName_eText.getText().clear();
-    }
-
-    // TODO: figure out why new meals in db do not refresh in the recycleView screen
-    private Long addNewMeal(String name, String notes) {
-        Log.d("function execution", "addNewMeal(name, notes) executing");
-        // COMPLETED (5) Inside, create a ContentValues instance to pass the values onto the insert query
-        ContentValues cv = new ContentValues();
-        // COMPLETED (6) call put to insert the name value with the key COLUMN_GUEST_NAME
-        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, name);
-        // COMPLETED (7) call put to insert the party size value with the key COLUMN_PARTY_SIZE
-        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, notes);
-        // COMPLETED (8) call insert to run an insert query on TABLE_NAME with the ContentValues created
-        Log.d("to db preview", "title: " + name);
-        Log.d("to db preview", "note: " + notes);
-        return mDb.insert(MealListContract.MealListEntry.TABLE_NAME, null, cv);
-    }
-
-//    private Cursor getAllGuests() {
-//        // COMPLETED (6) Inside, call query on mDb passing in the table name and projection String [] order by COLUMN_TIMESTAMP
-//        return mDb.query(
-//                MealListContract.MealListEntry.TABLE_NAME,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                MealListContract.MealListEntry.COLUMN_TIMESTAMP
-//        );
-//    }
-
-    // TODO: figure out why new meals in db do not refresh in the recycleView screen
-    public void createThisMeal_buttonClick(View view) {
-        Toast.makeText(getApplicationContext(), "calling createThisMeal(view)", Toast.LENGTH_SHORT).show();
-        Log.d("button click", "createThisMeal_buttonClick function called");
-        createThisMeal(view);
-        Intent intent = new Intent(this, Meals.class);
-        startActivity(intent);
-    }
 }

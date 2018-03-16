@@ -1,5 +1,6 @@
 package com.example.shymacbook.foodtracker;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,10 +22,11 @@ import com.example.shymacbook.foodtracker.data.TestUtil;
 
 public class Meals extends AppCompatActivity {
     private MealListAdapter mAdapter;
-
     private Button mCreateMealButton;
-
     private SQLiteDatabase mDb;
+    private String mNewMealExtra[];
+    private String mNewMealName;
+    private String mNewMealNote;
 
     private final static String LOG_TAG = Meals.class.getSimpleName();
 
@@ -36,6 +38,7 @@ public class Meals extends AppCompatActivity {
         setContentView(R.layout.activity_meals);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mNewMealExtra = new String[3];
 
         // Recycler View Stuff
         RecyclerView MealListRecyclerView;
@@ -64,15 +67,30 @@ public class Meals extends AppCompatActivity {
         });
     }
 
-    // TODO: attempting to refresh data and show new stuff in list here...
+    // DB updates by taking the putExtra from the create meal activity
+    //  then running the db insert statements here, with that EXTRA
     @Override
     protected void onResume() {
         super.onResume();
         Log.d("lifecycle", "onResume: at Meals called");
-        // COMPLETED (15)
-        // TODO: do I need this here? there is no recycleView on this screen, so do I need an adapter here?
-        mAdapter.swapCursor(getAllGuests());
+        Intent intentThatStartedThisAct = getIntent();
+        if (intentThatStartedThisAct.hasExtra(Intent.EXTRA_TEXT)) {
+            mNewMealExtra = intentThatStartedThisAct.getStringArrayExtra(Intent.EXTRA_TEXT);    // String or String[] ??
+            mNewMealName = mNewMealExtra[0];
+            mNewMealNote = mNewMealExtra[1];
+            // TODO: add to database here!
+            addNewGuest(mNewMealName, mNewMealNote);
+            mAdapter.swapCursor(getAllGuests());
+
+        }
         Log.d("function call", "swapCursor called at onResume Meals act");
+    }
+
+    private Long addNewGuest(String name, String note) {
+        ContentValues cv = new ContentValues();
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, name);
+        cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, note);
+        return mDb.insert(MealListContract.MealListEntry.TABLE_NAME, null, cv);
     }
 
     public void showCreateMeals(View view) {
