@@ -29,6 +29,7 @@ public class Meals extends AppCompatActivity {
     private String mNewMealName;
     private String mNewMealNote;
     private String mNewMealByteArr;
+    private byte[] mNewMealBitMapBytes;
 
     private final static String LOG_TAG = Meals.class.getSimpleName();
 
@@ -37,31 +38,28 @@ public class Meals extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("onCreate", "onCreate: Meals.java");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meals);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mNewMealExtra = new String[3];
 
+
         // Recycler View Stuff
         RecyclerView MealListRecyclerView;
         MealListRecyclerView = (RecyclerView) this.findViewById(R.id.meal_recyclerView);
-//        MealListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         MealListRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-
-
 
         MealListDbHelper dbHelper = new MealListDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
-        TestUtil.insertFakeData(mDb);
+        Log.d("onCreate", "onCreate: Meals.java about to call inserFakeData()");
+        // TODO: fix bitmap to byte[] to bitmap conversions brefore inserting fake data...
+//        TestUtil.insertFakeData(mDb);
+        Log.d("onCreate", "onCreate: about to make cursor = getAllGuests()");
         Cursor cursor = getAllGuests();
         mAdapter = new MealListAdapter(this, cursor);
         MealListRecyclerView.setAdapter(mAdapter);
-
-        // COMPLETED (15)
-        // TODO: do I need this here? there is no recycleView on this screen, so do I need an adapter here?
-//        mAdapter.swapCursor(getAllGuests());
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,18 +80,19 @@ public class Meals extends AppCompatActivity {
         Intent intentThatStartedThisAct = getIntent();
         if (intentThatStartedThisAct.hasExtra(Intent.EXTRA_TEXT)) {
             mNewMealExtra = intentThatStartedThisAct.getStringArrayExtra(Intent.EXTRA_TEXT);    // String or String[] ??
+
             mNewMealName = mNewMealExtra[0];
             mNewMealNote = mNewMealExtra[1];
             mNewMealByteArr = mNewMealExtra[2];
             // TODO: add to database here!
-            addNewGuest(mNewMealName, mNewMealNote, mNewMealByteArr);
+            mNewMealBitMapBytes = intentThatStartedThisAct.getByteArrayExtra(Intent.EXTRA_PROCESS_TEXT);
+            addNewGuest(mNewMealName, mNewMealNote, mNewMealBitMapBytes);
             mAdapter.swapCursor(getAllGuests());
-
         }
         Log.d("function call", "swapCursor called at onResume Meals act");
     }
 
-    private Long addNewGuest(String name, String note, String byteArr) {
+    private Long addNewGuest(String name, String note, byte[] byteArr) {
         ContentValues cv = new ContentValues();
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, name);
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, note);

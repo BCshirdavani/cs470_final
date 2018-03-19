@@ -17,7 +17,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
 
     // COMPLETED (3) Create a static final int called DATABASE_VERSION and set it to 1
     // If you change the database schema, you must increment the database version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // COMPLETED (4) Create a Constructor that takes a context and calls the parent constructor
     // Constructor
@@ -33,7 +33,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
                 MealListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 MealListEntry.COLUMN_MEAL_TITLE + " TEXT NOT NULL, " +
                 MealListEntry.COLUMN_MEAL_NOTES + " TEXT NOT NULL, " +
-                MealListEntry.COLUMN_PIC_BYTE_ARR + " TEXT NOT NULL, " +
+                MealListEntry.COLUMN_PIC_BYTE_ARR + " BLOB, " +
                 MealListEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 "); ";
 

@@ -26,7 +26,7 @@ public class CreateMeal extends AppCompatActivity {
     private ImageView mBitMapImView;
     private BitmapDrawable mBitMapDrawable;
     private Bitmap mBitMap;
-    private String mByteArray;
+    private byte[] mByteArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +61,21 @@ public class CreateMeal extends AppCompatActivity {
                 // get bitmap bytes, to send to db for picture
                 mBitMapDrawable = (BitmapDrawable) mBitMapImView.getDrawable();
                 mBitMap = mBitMapDrawable.getBitmap();
-                mByteArray = (String) dbBitmapUtility.getBytes(mBitMap).toString();
-                arrayExtra[2] = mByteArray;
+                mByteArray = dbBitmapUtility.getBytes(mBitMap);
+                arrayExtra[2] = "coming from CreareMeal act.";
                 Log.d("function execution: ", "arrayExtra was made...");
                 Context context = CreateMeal.this;
                 Class destinationAct = Meals.class;
                 Intent intent = new Intent(context, destinationAct);
                 Log.d("function execution: ", "about to putExtra");
                 intent.putExtra(Intent.EXTRA_TEXT, arrayExtra);
+                // TODO: byte[] for bitmaps
+                intent.putExtra(Intent.EXTRA_PROCESS_TEXT, mByteArray);
                 Log.d("intent.EXTRA", "createThisMeal_buttonClick: " + arrayExtra[0] + ", " + arrayExtra[1] + ", " + arrayExtra[2]);
+                Log.d("IMAGE check", "onClick: mByteArray.length = " + mByteArray.length);
+                Log.d("IMAGE check", "onClick: extra mByteArray[0] = " + mByteArray[0]);
+                Log.d("IMAGE check", "onClick: extra mByteArray = " + mByteArray);
+                Log.d("IMAGE check", "onClick: extra mByteArray.toString() = " + mByteArray.toString());
                 startActivity(intent);
             }
         });

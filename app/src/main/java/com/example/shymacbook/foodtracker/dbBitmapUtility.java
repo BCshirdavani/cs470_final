@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
  * Created by shymacbook on 3/18/18.
  */
 
+// TODO: this shows png, not bitmap?
 public class dbBitmapUtility {
     // convert from bitmap to byte array
     public static byte[] getBytes(Bitmap bitmap) {

@@ -2,14 +2,18 @@ package com.example.shymacbook.foodtracker;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shymacbook.foodtracker.data.MealListContract;
+
+import java.util.Arrays;
 
 /**
  * Created by shymacbook on 3/13/18.
@@ -43,12 +47,23 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
         // Update the view holder with the information needed to display
         String title = mCursor.getString(mCursor.getColumnIndex(MealListContract.MealListEntry.COLUMN_MEAL_TITLE));
         String notes = mCursor.getString(mCursor.getColumnIndex(MealListContract.MealListEntry.COLUMN_MEAL_NOTES));
+        // TODO: FIX THIS HERE: bitMapBytes appear to be incomplete?
+        byte[] bitmapBytes = mCursor.getBlob(mCursor.getColumnIndex(MealListContract.MealListEntry.COLUMN_MEAL_NOTES));
+        Log.d("CHECK IMAGE", "onBindViewHolder: MealListAdapter row 50: bitmapBytes = " + bitmapBytes);
+        Log.d("CHECK IMAGE", "onBindViewHolder: MealListAdapter row 51: arrays.tostring(bitmapBytes) = " + Arrays.toString(bitmapBytes));
+        String byteTEST = "";
+        for (int i = 0; i < bitmapBytes.length; i++){
+            byteTEST += bitmapBytes[i];
+        }
+        Log.d("CHECK IMAGE", "onBindViewHolder: for loop byteTEST print = " + byteTEST);
         long id = mCursor.getLong(mCursor.getColumnIndex(MealListContract.MealListEntry._ID));
 
         // Display the meal name <------------------------------------------------- LEFT OFF HERE *****************
         holder.titleTextView.setText(title);
         // Display the meal notes
         holder.notesTextView.setText(String.valueOf(notes));
+        // TODO: rather than string, just use BLOB and byte[] the whole time?
+        holder.picView.setImageBitmap(dbBitmapUtility.getImage(bitmapBytes));
         // use this to ID each row element, so we can delete with swipe.
         holder.itemView.setTag(id);
     }
@@ -81,11 +96,14 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
         TextView titleTextView;
         // Will display the Meal Notes
         TextView notesTextView;
+        // will show the picture of meal
+        ImageView picView;
 
         public MealViewHolder(View itemView) {
             super(itemView);
             titleTextView = (TextView) itemView.findViewById(R.id.mealTitle);
             notesTextView = (TextView) itemView.findViewById(R.id.mealSubTitle);
+            picView = (ImageView) itemView.findViewById(R.id.mealImageView);
         }
     }
 }
