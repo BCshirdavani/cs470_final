@@ -11,6 +11,7 @@ public class MealListContract {
         public static final String TABLE_NAME = "mealList";
         public static final String COLUMN_MEAL_TITLE = "mealName";
         public static final String COLUMN_MEAL_NOTES = "mealNotes";
+        public static final String COLUMN_PIC_BYTE_ARR = "mealPic";
         public static final String COLUMN_TIMESTAMP = "timestamp";
     }
 }

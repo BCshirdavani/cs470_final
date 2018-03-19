@@ -33,6 +33,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
                 MealListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 MealListEntry.COLUMN_MEAL_TITLE + " TEXT NOT NULL, " +
                 MealListEntry.COLUMN_MEAL_NOTES + " TEXT NOT NULL, " +
+                MealListEntry.COLUMN_PIC_BYTE_ARR + " TEXT NOT NULL, " +
                 MealListEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 "); ";
 
