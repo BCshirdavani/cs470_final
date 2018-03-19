@@ -28,6 +28,7 @@ public class Meals extends AppCompatActivity {
     private String mNewMealExtra[];
     private String mNewMealName;
     private String mNewMealNote;
+    private String mNewMealByteArr;
 
     private final static String LOG_TAG = Meals.class.getSimpleName();
 
@@ -83,18 +84,20 @@ public class Meals extends AppCompatActivity {
             mNewMealExtra = intentThatStartedThisAct.getStringArrayExtra(Intent.EXTRA_TEXT);    // String or String[] ??
             mNewMealName = mNewMealExtra[0];
             mNewMealNote = mNewMealExtra[1];
+            mNewMealByteArr = mNewMealExtra[2];
             // TODO: add to database here!
-            addNewGuest(mNewMealName, mNewMealNote);
+            addNewGuest(mNewMealName, mNewMealNote, mNewMealByteArr);
             mAdapter.swapCursor(getAllGuests());
 
         }
         Log.d("function call", "swapCursor called at onResume Meals act");
     }
 
-    private Long addNewGuest(String name, String note) {
+    private Long addNewGuest(String name, String note, String byteArr) {
         ContentValues cv = new ContentValues();
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, name);
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, note);
+        cv.put(MealListContract.MealListEntry.COLUMN_PIC_BYTE_ARR, byteArr);
         return mDb.insert(MealListContract.MealListEntry.TABLE_NAME, null, cv);
     }
 

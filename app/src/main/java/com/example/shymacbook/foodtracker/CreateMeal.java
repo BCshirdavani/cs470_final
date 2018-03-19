@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,10 @@ public class CreateMeal extends AppCompatActivity {
     private EditText mMealName_eText;
     private EditText mMealNotes_eText;
     private Button mAddMeal_Button;
+    private ImageView mBitMapImView;
+    private BitmapDrawable mBitMapDrawable;
+    private Bitmap mBitMap;
+    private String mByteArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class CreateMeal extends AppCompatActivity {
         mMealNotes_eText = (EditText) this.findViewById(R.id.meal_notes_editText);
         mAddMeal_Button = (Button) this.findViewById(R.id.createThisMeal_button);
         arrayExtra = new String[3];
+        mBitMapImView = (ImageView) this.findViewById(R.id.Mealphoto);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -52,7 +58,11 @@ public class CreateMeal extends AppCompatActivity {
                 Log.d("function execution: ", "about to make arrayExtra");
                 arrayExtra[0] = (String) mMealName_eText.getText().toString();
                 arrayExtra[1] = (String) mMealNotes_eText.getText().toString();
-                arrayExtra[2] = "fromCreateMeal";
+                // get bitmap bytes, to send to db for picture
+                mBitMapDrawable = (BitmapDrawable) mBitMapImView.getDrawable();
+                mBitMap = mBitMapDrawable.getBitmap();
+                mByteArray = (String) dbBitmapUtility.getBytes(mBitMap).toString();
+                arrayExtra[2] = mByteArray;
                 Log.d("function execution: ", "arrayExtra was made...");
                 Context context = CreateMeal.this;
                 Class destinationAct = Meals.class;
