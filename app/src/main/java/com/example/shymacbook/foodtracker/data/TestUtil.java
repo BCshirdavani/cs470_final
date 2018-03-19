@@ -34,7 +34,7 @@ public class TestUtil {
         cv = new ContentValues();
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_TITLE, "Beef Taco");
         cv.put(MealListContract.MealListEntry.COLUMN_MEAL_NOTES, "beef, tortlla, cheese, beans");
-//        cv.put(MealListContract.MealListEntry.COLUMN_PIC_BYTE_ARR, tacoBytes);
+        cv.put(MealListContract.MealListEntry.COLUMN_PIC_BYTE_ARR, tacoBytes);
         list.add(cv);
 
         //insert all guests in one transaction
