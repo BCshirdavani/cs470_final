@@ -2,6 +2,8 @@ package com.example.shymacbook.foodtracker;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -63,7 +65,9 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
         // Display the meal notes
         holder.notesTextView.setText(String.valueOf(notes));
         // TODO: rather than string, just use BLOB and byte[] the whole time?
-        holder.picView.setImageBitmap(dbBitmapUtility.getImage(bitmapBytes));
+//        holder.picView.setImageBitmap(dbBitmapUtility.getImage(bitmapBytes));
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
+        holder.picView.setImageBitmap(bitmap);
         // use this to ID each row element, so we can delete with swipe.
         holder.itemView.setTag(id);
     }
@@ -115,10 +119,13 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
         @Override
         public void onClick(View v) {
             // TODO: give action for onClick in Meal List
+            long cardID;
+            cardID = (long) MealViewHolder.this.itemView.getTag();
             int mPosition = getLayoutPosition();
-            Toast.makeText(mContext, "adding meal", Toast.LENGTH_SHORT).show();
-            Log.d("onClick", "onClick: recycler item clicked!");
-
+            Toast.makeText(mContext, "meal clicked @ pos: " + mPosition + ", @ id: " + cardID, Toast.LENGTH_SHORT).show();
+            Log.d("onClick", "onClick: position = " + mPosition);
+            cardID = (long) MealViewHolder.this.itemView.getTag();
+            Log.d("onClick", "onClick: meal clicked @ card ID: " + cardID);
         }
 
 
