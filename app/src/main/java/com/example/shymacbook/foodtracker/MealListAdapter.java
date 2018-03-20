@@ -3,6 +3,7 @@ package com.example.shymacbook.foodtracker;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.Image;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shymacbook.foodtracker.data.MealListContract;
 
@@ -34,7 +36,7 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
         // Get the RecyclerView item layout
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.meal_list_item, parent, false);
-        return new MealViewHolder(view);
+        return new MealViewHolder(view, this);
     }
 
     @Override
@@ -57,8 +59,6 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
         }
         Log.d("CHECK IMAGE", "onBindViewHolder: for loop byteTEST print = " + byteTEST);
         long id = mCursor.getLong(mCursor.getColumnIndex(MealListContract.MealListEntry._ID));
-
-        // Display the meal name <------------------------------------------------- LEFT OFF HERE *****************
         holder.titleTextView.setText(title);
         // Display the meal notes
         holder.notesTextView.setText(String.valueOf(notes));
@@ -91,19 +91,36 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
     }
 
 
-    public class MealViewHolder extends RecyclerView.ViewHolder {
+    public class MealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // Will display the Meal Name
-        TextView titleTextView;
+        public final TextView titleTextView;
         // Will display the Meal Notes
         TextView notesTextView;
         // will show the picture of meal
         ImageView picView;
+        // give ID to this card, so SQL ID can assign to a tag of the card
+//        CardView card;
+        final MealListAdapter mAdapter;
 
-        public MealViewHolder(View itemView) {
+        public MealViewHolder(View itemView, MealListAdapter adapter) {
             super(itemView);
             titleTextView = (TextView) itemView.findViewById(R.id.mealTitle);
             notesTextView = (TextView) itemView.findViewById(R.id.mealSubTitle);
             picView = (ImageView) itemView.findViewById(R.id.mealImageView);
+//            card = (CardView) itemView.findViewById(R.id.meal_cardView);
+            this.mAdapter = adapter;
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            // TODO: give action for onClick in Meal List
+            int mPosition = getLayoutPosition();
+            Toast.makeText(mContext, "adding meal", Toast.LENGTH_SHORT).show();
+            Log.d("onClick", "onClick: recycler item clicked!");
+
+        }
+
+
     }
 }
