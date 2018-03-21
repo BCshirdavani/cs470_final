@@ -55,7 +55,7 @@ public class Meals extends AppCompatActivity {
         mDb = dbHelper.getWritableDatabase();
         Log.d("onCreate", "onCreate: Meals.java about to call inserFakeData()");
         // TODO: fix bitmap to byte[] to bitmap conversions brefore inserting fake data...
-//        TestUtil.insertFakeData(mDb);
+        TestUtil.insertFakeData(mDb);
         Log.d("onCreate", "onCreate: about to make cursor = getAllGuests()");
         Cursor cursor = getAllGuests();
         mAdapter = new MealListAdapter(this, cursor);
