@@ -25,6 +25,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // TODO: make meal name or title UNIQUE constraint
     @Override
     public void onCreate(SQLiteDatabase db) {
         // COMPLETED (6) Inside, create an String query called SQL_CREATE_WAITLIST_TABLE that will create the table
@@ -36,9 +37,26 @@ public class MealListDbHelper extends SQLiteOpenHelper {
                 MealListEntry.COLUMN_PIC_BYTE_ARR + " BLOB, " +
                 MealListEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 "); ";
+        // TODO: make table for recycler click, adds meal to FAB fragment dialog
+        final String SQL_CREATE_PRECONSUMED_TABLE = "CREATE TABLE " + MealListPreConsumed.TABLE_NAME + " (" +
+                MealListPreConsumed._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                MealListPreConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL " +
+                "); ";
+        // TODO: make function in FAB, that adds meal to consumed table, then clears temp table
+        // TODO: make function to put UNIX time into eattime integer var
+        final String SQL_CREATE_EAT_TABLE = "CREATE TABLE " + MealsConsumed.TABLE_NAME + " (" +
+                MealsConsumed._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                MealsConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL, " +
+                MealsConsumed.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                MealsConsumed.COLUMN_EATTIME + " INTEGER " +
+                MealsConsumed.CULUMN_FEELS + " INTEGER, " +
+                "FOREIGN KEY (" + MealsConsumed.COLUMN_MEAL_TITLE + ") REFERENCES " +  MealListEntry.TABLE_NAME + "(" + MealListEntry.COLUMN_MEAL_TITLE + ")" +
+                "); ";
 
         // COMPLETED (7) Execute the query by calling execSQL on sqLiteDatabase and pass the string query SQL_CREATE_WAITLIST_TABLE
         db.execSQL(SQL_CREATE_MEALLIST_TABLE);
+        db.execSQL(SQL_CREATE_PRECONSUMED_TABLE);
+        db.execSQL(SQL_CREATE_EAT_TABLE);
     }
 
     @Override

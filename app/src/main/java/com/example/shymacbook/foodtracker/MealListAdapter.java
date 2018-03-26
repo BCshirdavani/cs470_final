@@ -118,7 +118,7 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
 
         @Override
         public void onClick(View v) {
-            // TODO: give action for onClick in Meal List
+            // TODO: give action for onClick in Meal List, add to FAB temp data
             long cardID;
             cardID = (long) MealViewHolder.this.itemView.getTag();
             int mPosition = getLayoutPosition();

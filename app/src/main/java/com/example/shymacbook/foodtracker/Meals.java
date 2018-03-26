@@ -84,7 +84,6 @@ public class Meals extends AppCompatActivity {
             mNewMealName = mNewMealExtra[0];
             mNewMealNote = mNewMealExtra[1];
             mNewMealByteArr = mNewMealExtra[2];
-            // TODO: add to database here!
             mNewMealBitMapBytes = intentThatStartedThisAct.getByteArrayExtra(Intent.EXTRA_PROCESS_TEXT);
             addNewGuest(mNewMealName, mNewMealNote, mNewMealBitMapBytes);
             mAdapter.swapCursor(getAllGuests());
