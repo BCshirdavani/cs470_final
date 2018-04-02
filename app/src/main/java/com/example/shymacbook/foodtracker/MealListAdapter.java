@@ -119,6 +119,11 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.MealVi
         @Override
         public void onClick(View v) {
             // TODO: give action for onClick in Meal List, add to FAB temp data
+            // TODO: add data to table sql
+            //      make sql select statement to find that cardID tag, which is the primary key ID,
+            //      use that querry, and add this data to the next temporary table
+            //          ...or just put it in a temp string[] array, then use those parameters
+            //          to populate the final table, no need for temp table?
             long cardID;
             cardID = (long) MealViewHolder.this.itemView.getTag();
             int mPosition = getLayoutPosition();

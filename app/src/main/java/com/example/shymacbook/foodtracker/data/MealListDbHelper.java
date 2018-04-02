@@ -17,7 +17,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
 
     // COMPLETED (3) Create a static final int called DATABASE_VERSION and set it to 1
     // If you change the database schema, you must increment the database version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // COMPLETED (4) Create a Constructor that takes a context and calls the parent constructor
     // Constructor
@@ -32,7 +32,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
         // Create a table to hold waitlist data
         final String SQL_CREATE_MEALLIST_TABLE = "CREATE TABLE " + MealListEntry.TABLE_NAME + " (" +
                 MealListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                MealListEntry.COLUMN_MEAL_TITLE + " TEXT NOT NULL, " +
+                MealListEntry.COLUMN_MEAL_TITLE + " TEXT NOT NULL UNIQUE, " +
                 MealListEntry.COLUMN_MEAL_NOTES + " TEXT NOT NULL, " +
                 MealListEntry.COLUMN_PIC_BYTE_ARR + " BLOB, " +
                 MealListEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
@@ -40,15 +40,15 @@ public class MealListDbHelper extends SQLiteOpenHelper {
         // TODO: make table for recycler click, adds meal to FAB fragment dialog
         final String SQL_CREATE_PRECONSUMED_TABLE = "CREATE TABLE " + MealListPreConsumed.TABLE_NAME + " (" +
                 MealListPreConsumed._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                MealListPreConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL " +
+                MealListPreConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL UNIQUE" +
                 "); ";
         // TODO: make function in FAB, that adds meal to consumed table, then clears temp table
         // TODO: make function to put UNIX time into eattime integer var
         final String SQL_CREATE_EAT_TABLE = "CREATE TABLE " + MealsConsumed.TABLE_NAME + " (" +
                 MealsConsumed._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                MealsConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL, " +
+                MealsConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL UNIQUE, " +
                 MealsConsumed.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
-                MealsConsumed.COLUMN_EATTIME + " INTEGER " +
+                MealsConsumed.COLUMN_EATTIME + " INTEGER, " +
                 MealsConsumed.CULUMN_FEELS + " INTEGER, " +
                 "FOREIGN KEY (" + MealsConsumed.COLUMN_MEAL_TITLE + ") REFERENCES " +  MealListEntry.TABLE_NAME + "(" + MealListEntry.COLUMN_MEAL_TITLE + ")" +
                 "); ";
@@ -63,6 +63,8 @@ public class MealListDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // COMPLETED (9) Inside, execute a drop table query, and then call onCreate to re-create it
         db.execSQL("DROP TABLE IF EXISTS " + MealListEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MealListPreConsumed.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MealsConsumed.TABLE_NAME);
         onCreate(db);
     }
 }
