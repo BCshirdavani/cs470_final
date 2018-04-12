@@ -38,10 +38,10 @@ public class MealListDbHelper extends SQLiteOpenHelper {
                 MealListEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 "); ";
         // TODO: make table for recycler click, adds meal to FAB fragment dialog
-        final String SQL_CREATE_PRECONSUMED_TABLE = "CREATE TABLE " + MealListPreConsumed.TABLE_NAME + " (" +
-                MealListPreConsumed._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                MealListPreConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL UNIQUE" +
-                "); ";
+//        final String SQL_CREATE_PRECONSUMED_TABLE = "CREATE TABLE " + MealListPreConsumed.TABLE_NAME + " (" +
+//                MealListPreConsumed._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                MealListPreConsumed.COLUMN_MEAL_TITLE + " TEXT NOT NULL UNIQUE" +
+//                "); ";
         // TODO: make function in FAB, that adds meal to consumed table, then clears temp table
         // TODO: make function to put UNIX time into eattime integer var
         final String SQL_CREATE_EAT_TABLE = "CREATE TABLE " + MealsConsumed.TABLE_NAME + " (" +
@@ -55,7 +55,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
 
         // COMPLETED (7) Execute the query by calling execSQL on sqLiteDatabase and pass the string query SQL_CREATE_WAITLIST_TABLE
         db.execSQL(SQL_CREATE_MEALLIST_TABLE);
-        db.execSQL(SQL_CREATE_PRECONSUMED_TABLE);
+//        db.execSQL(SQL_CREATE_PRECONSUMED_TABLE);
         db.execSQL(SQL_CREATE_EAT_TABLE);
     }
 
@@ -63,7 +63,7 @@ public class MealListDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // COMPLETED (9) Inside, execute a drop table query, and then call onCreate to re-create it
         db.execSQL("DROP TABLE IF EXISTS " + MealListEntry.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + MealListPreConsumed.TABLE_NAME);
+//        db.execSQL("DROP TABLE IF EXISTS " + MealListPreConsumed.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + MealsConsumed.TABLE_NAME);
         onCreate(db);
     }
